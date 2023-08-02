@@ -32,6 +32,11 @@ public class AnimeService {
         return animeOptional.orElse(null);
     }
 
+    public Anime getAnimeById(Long id) {
+        Optional<Anime> animeOptional = animeRepository.findById(id);
+        return animeOptional.orElse(null);
+    }
+
     public void deleteAnimeByName(String name) throws IOException {
         Anime anime = getAnimeByName(name);
 //        String pathArray = anime.getImagePath();

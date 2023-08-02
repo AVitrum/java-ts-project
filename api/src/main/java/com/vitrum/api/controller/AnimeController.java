@@ -36,7 +36,7 @@ public class AnimeController {
             @RequestParam("recommendation") String recommendation,
             @RequestParam("image") MultipartFile image
     ) throws IOException {
-        String uploadDir = "/Users/almashiandrey/Developer/Projects/my-site/api/public/images";
+        String uploadDir = "/Users/almashiandrey/Developer/Projects/my-website/front/public/images";
         String fileName = image.getOriginalFilename();
         Path filePath = Paths.get(uploadDir, fileName);
         Files.write(filePath, image.getBytes());
@@ -45,7 +45,7 @@ public class AnimeController {
         anime.setName(name);
         anime.setRating(rating);
         anime.setRecommendation(recommendation);
-        anime.setImagePath(filePath.toString());
+        anime.setImagePath("/images/" + fileName);
 
         return animeService.saveAnime(anime);
     }
