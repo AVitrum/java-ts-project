@@ -27,8 +27,8 @@ public class AnimeService {
         return animeRepository.findAll();
     }
 
-    public Anime getAnimeByName(String name) {
-        Optional<Anime> animeOptional = animeRepository.findByName(name);
+    public Anime getAnimeByTitle(String title) {
+        Optional<Anime> animeOptional = animeRepository.findByTitle(title);
         return animeOptional.orElse(null);
     }
 
@@ -37,8 +37,8 @@ public class AnimeService {
         return animeOptional.orElse(null);
     }
 
-    public void deleteAnimeByName(String name) throws IOException {
-        Anime anime = getAnimeByName(name);
+    public void deleteAnimeByTitle(String name) throws IOException {
+        Anime anime = getAnimeByTitle(name);
 //        String pathArray = anime.getImagePath();
 //        String fileName = pathArray.split("/")[4];
 //        Path filePath = Paths.get(anime.getImagePath(), fileName);

@@ -1,7 +1,7 @@
 import {Routes, Route} from 'react-router-dom';
 import Layout from "./components/Layout.tsx";
-import HomePage from "./pages/homePage.tsx";
-import AddAnime from "./pages/anime/addAnime.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import AddAnime from "./pages/anime/AddAnime.tsx";
 
 export default function AppRoutes() {
     return(

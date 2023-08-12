@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AnimePost from "../components/animePost.tsx";
+import AnimePost from "../components/anime-components/AnimePost.tsx";
 
 interface Anime {
     id: number,
-    name: string;
+    title: string;
     rating: number;
     recommendation: string;
+    genres: string;
+    link: string;
     imagePath: string;
 }
 
@@ -19,13 +21,14 @@ const HomePage: React.FC = () => {
 
     const loadAnime = async () => {
         const res = await axios.get<Anime[]>("http://localhost:8080/anime");
-        setAnime(res.data);
+        const sortedByRatingRes = res.data.sort((a, b) => b.rating - a.rating);
+        setAnime(sortedByRatingRes);
     };
 
     return (
         <div className="anime-posts">
             {anime.map((animeItem) => (
-                <AnimePost key={animeItem.name} anime={animeItem} />
+                <AnimePost key={animeItem.title} anime={animeItem} />
             ))}
         </div>
     );

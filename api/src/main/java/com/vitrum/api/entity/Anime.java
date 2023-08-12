@@ -20,12 +20,25 @@ public class Anime {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
+
+    @Column(nullable = false)
+    private String recommendation;
+
+//    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private String genres;
+
+    @Column(nullable = false)
+    private String link;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = false)
     private double rating;
-
-    private String recommendation;
 
     @Column(name = "image_path")
     private String imagePath;

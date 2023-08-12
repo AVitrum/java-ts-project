@@ -1,5 +1,5 @@
 import './App.css'
-import AppRoutes from "./routes.tsx";
+import AppRoutes from "./AppRoutes.tsx";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 

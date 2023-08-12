@@ -1,6 +1,7 @@
 package com.vitrum.api.controller;
 
 import com.vitrum.api.entity.Anime;
+import com.vitrum.api.entity.User;
 import com.vitrum.api.service.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +34,10 @@ public class AnimeController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Anime addAnime(
-            @RequestParam("name") String name,
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam("title") String title,
+            @RequestParam("genres") String genres,
+            @RequestParam("link") String link,
             @RequestParam("rating") double rating,
             @RequestParam("recommendation") String recommendation,
             @RequestParam("image") MultipartFile image
@@ -42,10 +48,16 @@ public class AnimeController {
         Files.write(filePath, image.getBytes());
 
         Anime anime = new Anime();
-        anime.setName(name);
+        anime.setTitle(title);
         anime.setRating(rating);
         anime.setRecommendation(recommendation);
+        anime.setGenres(genres);
+        anime.setLink(link);
         anime.setImagePath("/images/" + fileName);
+
+        Long userId = ((User) userDetails).getId();
+        anime.setUserId(userId);
+
 
         return animeService.saveAnime(anime);
     }
@@ -55,22 +67,22 @@ public class AnimeController {
         return animeService.getAllAnime();
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<?> getAnimeByName(@PathVariable("name") String name) {
-        Anime anime = animeService.getAnimeByName(name);
+    @GetMapping("/{title}")
+    public ResponseEntity<?> getAnimeByName(@PathVariable("title") String title) {
+        Anime anime = animeService.getAnimeByTitle(title);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(anime);
     }
-    @DeleteMapping("/{name}")
-    public ResponseEntity<?> deleteAnimeByName(@PathVariable("name") String name) throws IOException {
-        animeService.deleteAnimeByName(name);
+    @DeleteMapping("/{title}")
+    public ResponseEntity<?> deleteAnimeByName(@PathVariable("title") String title) throws IOException {
+        animeService.deleteAnimeByTitle(title);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted");
     }
 
-    @GetMapping("/{name}/image")
-    public ResponseEntity<?> getImageByName(@PathVariable("name") String name) {
-        Anime anime = animeService.getAnimeByName(name);
+    @GetMapping("/{title}/image")
+    public ResponseEntity<?> getImageByName(@PathVariable("title") String title) {
+        Anime anime = animeService.getAnimeByTitle(title);
 
         if (anime == null) {
             return ResponseEntity.notFound().build();

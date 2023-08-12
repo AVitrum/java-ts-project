@@ -3,21 +3,25 @@ import React, {useState} from "react";
 import axios from "axios";
 
 interface Anime {
-    name: string;
+    title: string;
     rating: number;
     recommendation: string;
+    genres: string;
+    link: string;
     file: File | null;
 }
 
 export default function AddAnime() {
    const navigate = useNavigate();
    const [anime, setAnime] = useState<Anime>({
-       name: "",
+       title: "",
        rating: 0,
        recommendation: "",
+       genres: "",
+       link: "",
        file: null,
    });
-   const { name, rating, recommendation, file } = anime;
+   const { title, rating, recommendation, genres, link, file } = anime;
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAnime({ ...anime, [e.target.name]: e.target.value });
@@ -32,9 +36,11 @@ export default function AddAnime() {
 
         const formData = new FormData();
 
-        formData.append("name", name);
+        formData.append("title", title);
         formData.append("rating", rating.toString());
         formData.append("recommendation", recommendation);
+        formData.append("genres", genres);
+        formData.append("link", link);
 
         if (file) {
             formData.append("image", file);
@@ -50,15 +56,15 @@ export default function AddAnime() {
                     <h2 className="text-center m-4">Add Anime to DB</h2>
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-3">
-                            <label htmlFor="name" className="form-label">
+                            <label htmlFor="title" className="form-label">
                                 Title
                             </label>
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Enter Title"
-                                name="name"
-                                value={name}
+                                placeholder="Title"
+                                name="title"
+                                value={title}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
@@ -69,9 +75,34 @@ export default function AddAnime() {
                             <input
                                 type="number"
                                 className="form-control"
-                                placeholder="Enter rating"
                                 name="rating"
                                 value={rating}
+                                onChange={(e) => onInputChange(e)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Genres" className="form-label">
+                                Genres
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Genres"
+                                name="genres"
+                                value={genres}
+                                onChange={(e) => onInputChange(e)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Link" className="form-label">
+                                Link
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Link"
+                                name="link"
+                                value={link}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
@@ -82,7 +113,7 @@ export default function AddAnime() {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Enter your recommendation"
+                                placeholder="Recommendation"
                                 name="recommendation"
                                 value={recommendation}
                                 onChange={(e) => onInputChange(e)}
@@ -95,7 +126,6 @@ export default function AddAnime() {
                             <input
                                 type="file"
                                 className="form-control"
-                                placeholder="Enter your photo"
                                 name="file"
                                 onChange={onFileChange}
                             />
