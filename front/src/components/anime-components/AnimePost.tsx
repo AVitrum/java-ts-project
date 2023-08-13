@@ -20,7 +20,7 @@ const AnimePost: React.FC<AnimePostProps> = ({ anime }) => {
         <div className="anime-post my-3" style={{ height: "400px" }}>
             <div className="row h-100">
                 <div className="col-md-2 d-flex align-items-md-start">
-                    <img src={anime.imagePath} className="img-fluid" />
+                    <img src={anime.imagePath} className="img-fluid"  alt={""}/>
                 </div>
                 <div className="col-md-4 d-flex align-items-md-start">
                     <div>

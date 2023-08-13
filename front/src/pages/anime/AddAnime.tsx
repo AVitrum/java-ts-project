@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import axios from "axios";
+import {UserContext} from "../../components/UserContext.tsx";
 
 interface Anime {
     title: string;
@@ -13,6 +14,7 @@ interface Anime {
 
 export default function AddAnime() {
    const navigate = useNavigate();
+   const { token } = useContext(UserContext);
    const [anime, setAnime] = useState<Anime>({
        title: "",
        rating: 0,
@@ -21,6 +23,11 @@ export default function AddAnime() {
        link: "",
        file: null,
    });
+   const config = {
+       headers: {
+           Authorization: `Bearer ${token}`
+       }
+   };
    const { title, rating, recommendation, genres, link, file } = anime;
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +52,7 @@ export default function AddAnime() {
         if (file) {
             formData.append("image", file);
         }
-        await axios.post("http://localhost:8080/anime", formData);
+        await axios.post("http://localhost:8080/anime", formData, config);
         navigate("/");
     };
 
