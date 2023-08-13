@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,18 +35,18 @@ public class AnimeService {
         return animeOptional.orElse(null);
     }
 
-    public Anime getAnimeById(Long id) {
-        Optional<Anime> animeOptional = animeRepository.findById(id);
-        return animeOptional.orElse(null);
-    }
 
     public void deleteAnimeByTitle(String name) throws IOException {
         Anime anime = getAnimeByTitle(name);
-//        String pathArray = anime.getImagePath();
-//        String fileName = pathArray.split("/")[4];
-//        Path filePath = Paths.get(anime.getImagePath(), fileName);
-        animeRepository.deleteById(anime.getId());
-//        Files.delete(filePath);
-    }
+        if (anime != null) {
+            String imagePath = anime.getImagePath();
+            Path imagePathToDelete = Paths.get(imagePath);
 
+            if (Files.exists(imagePathToDelete)) {
+                Files.delete(imagePathToDelete);
+            }
+
+            animeRepository.delete(anime);
+        }
+    }
 }
