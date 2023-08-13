@@ -1,5 +1,7 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useContext} from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import {UserContext} from "../UserContext.tsx";
 
 interface Anime {
     id: number;
@@ -16,22 +18,33 @@ interface AnimePostProps {
 }
 
 const AnimePost: React.FC<AnimePostProps> = ({ anime }) => {
+    const { token } = useContext(UserContext);
+    const deleteAnime = async () => {
+        await axios.delete(`http://localhost:8080/anime/${anime.title}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        window.location.reload();
+    };
     return (
-        <div className="anime-post my-3" style={{ height: "400px" }}>
-            <div className="row h-100">
-                <div className="col-md-2 d-flex align-items-md-start">
-                    <img src={anime.imagePath} className="img-fluid"  alt={""}/>
+        <div className="anime-post my-3 border rounded p-3">
+            <div className="row">
+                <div className="col-md-3">
+                    <img src={anime.imagePath} className="img-fluid" alt={""} />
                 </div>
-                <div className="col-md-4 d-flex align-items-md-start">
+                <div className="col-md-9">
                     <div>
                         <h2>{anime.title}</h2>
                         <h5>{anime.genres}</h5>
-                        <p/>
+                        <p />
                         <h6>Rating: {anime.rating}</h6>
                         <h6>Recommendation: {anime.recommendation}</h6>
                         <Link to={anime.link}> {anime.link}</Link>
-                        <p/>
-                        <Link to={"/"} className={"btn btn-outline-primary"}>More info</Link>
+                        <p />
+                        <button onClick={deleteAnime} className={"btn btn-outline-danger"}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
