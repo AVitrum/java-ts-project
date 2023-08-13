@@ -1,15 +1,18 @@
 package com.vitrum.api.service;
 
 import com.vitrum.api.config.JwtService;
+import com.vitrum.api.dto.UserProfileResponse;
 import com.vitrum.api.entity.Role;
 import com.vitrum.api.entity.User;
 import com.vitrum.api.repository.UserRepository;
-import com.vitrum.api.util.AuthenticationRequest;
-import com.vitrum.api.util.AuthenticationResponse;
-import com.vitrum.api.util.RegisterRequest;
+import com.vitrum.api.dto.AuthenticationRequest;
+import com.vitrum.api.dto.AuthenticationResponse;
+import com.vitrum.api.dto.RegisterRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,4 +54,29 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
+
+    public UserProfileResponse getUserProfile(HttpServletRequest request) {
+        String jwt = extractJwtFromRequest(request);
+        String userEmail = jwtService.extractUsername(jwt);
+
+        User user = repository.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return UserProfileResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .role(user.getRole())
+                .build();
+    }
+
+    private String extractJwtFromRequest(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        throw new IllegalArgumentException("Invalid authorization header");
+    }
+
 }

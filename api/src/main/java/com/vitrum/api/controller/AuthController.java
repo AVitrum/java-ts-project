@@ -1,19 +1,17 @@
 package com.vitrum.api.controller;
 
 import com.vitrum.api.service.AuthenticationService;
-import com.vitrum.api.util.AuthenticationRequest;
-import com.vitrum.api.util.AuthenticationResponse;
-import com.vitrum.api.util.RegisterRequest;
+import com.vitrum.api.dto.AuthenticationRequest;
+import com.vitrum.api.dto.AuthenticationResponse;
+import com.vitrum.api.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 public class AuthController {
 
     private final AuthenticationService service;

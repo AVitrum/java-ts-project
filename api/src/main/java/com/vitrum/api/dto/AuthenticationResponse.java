@@ -1,4 +1,4 @@
-package com.vitrum.api.util;
+package com.vitrum.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
