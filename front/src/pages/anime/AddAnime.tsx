@@ -53,7 +53,7 @@ export default function AddAnime() {
             formData.append("image", file);
         }
         await axios.post("http://localhost:8080/anime", formData, config);
-        navigate("/");
+        navigate("/animeList");
     };
 
     return (

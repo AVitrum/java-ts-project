@@ -2,8 +2,9 @@
     padding-top: 100px;
 }
 
-.text-decoration-underline-c {
+.text-decoration-underline {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 5px;
+    text-underline-offset: 10px;
     text-decoration-skip-ink: none;
 }

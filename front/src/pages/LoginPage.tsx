@@ -6,21 +6,26 @@ import { UserContext } from "../components/UserContext";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const { setToken } = useContext(UserContext);
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const res = await axios.post(
-            "http://localhost:8080/api/v1/auth/authenticate",
-            {
-                email,
-                password,
-            }
-        );
-        setToken(res.data.token);
-        navigate("/dashboard");
-        window.location.reload();
+        try {
+            const res = await axios.post(
+                "http://localhost:8080/api/v1/auth/authenticate",
+                {
+                    email,
+                    password,
+                }
+            );
+            setToken(res.data.token);
+            navigate("/dashboard");
+            window.location.reload();
+        } catch (error) {
+            setErrorMessage("Incorrect credentials");
+        }
     };
 
     return (
@@ -28,6 +33,11 @@ export default function Login() {
             <div className="row justify-content-center">
                 <div className="col-md-6 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4">Login</h2>
+                    {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                            {errorMessage}
+                        </div>
+                    )}
                     <form onSubmit={(e) => onSubmit(e)}>
                         <div className="mb-4">
                             <input
