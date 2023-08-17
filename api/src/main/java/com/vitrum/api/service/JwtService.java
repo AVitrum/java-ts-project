@@ -1,4 +1,4 @@
-package com.vitrum.api.config;
+package com.vitrum.api.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,9 +1,12 @@
 package com.vitrum.api.service;
 
+import com.vitrum.api.dto.Request.AnimeRequest;
 import com.vitrum.api.entity.Anime;
 import com.vitrum.api.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +18,9 @@ import java.util.Optional;
 @Service
 public class AnimeService {
 
+    @Value("${upload.dir}")
+    private String uploadDir;
+
     private final AnimeRepository animeRepository;
 
     @Autowired
@@ -22,7 +28,22 @@ public class AnimeService {
         this.animeRepository = animeRepository;
     }
 
-    public Anime saveAnime(Anime anime) {
+    public Anime saveAnime(AnimeRequest animeRequest, Long userId) throws IOException {
+        MultipartFile image = animeRequest.getImage();
+
+        String fileName = image.getOriginalFilename();
+        Path filePath = Paths.get(uploadDir, fileName);
+        Files.write(filePath, image.getBytes());
+
+        Anime anime = new Anime();
+        anime.setTitle(animeRequest.getTitle());
+        anime.setRating(animeRequest.getRating());
+        anime.setRecommendation(animeRequest.getRecommendation());
+        anime.setGenres(animeRequest.getGenres());
+        anime.setLink(animeRequest.getLink());
+        anime.setImagePath("/images/" + fileName);
+        anime.setUserId(userId);
+
         return animeRepository.save(anime);
     }
 

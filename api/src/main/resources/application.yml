@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/student
+    url: jdbc:postgresql://localhost:5430/my_site
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
@@ -13,3 +13,6 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+upload:
+  dir: /Users/almashiandrey/Developer/Projects/my-website/front/public/images

@@ -1,13 +1,12 @@
 package com.vitrum.api.service;
 
-import com.vitrum.api.config.JwtService;
-import com.vitrum.api.dto.UserProfileResponse;
+import com.vitrum.api.dto.Response.UserProfileResponse;
 import com.vitrum.api.entity.Role;
 import com.vitrum.api.entity.User;
 import com.vitrum.api.repository.UserRepository;
-import com.vitrum.api.dto.AuthenticationRequest;
-import com.vitrum.api.dto.AuthenticationResponse;
-import com.vitrum.api.dto.RegisterRequest;
+import com.vitrum.api.dto.Request.AuthenticationRequest;
+import com.vitrum.api.dto.Response.AuthenticationResponse;
+import com.vitrum.api.dto.Request.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -80,3 +79,4 @@ public class AuthenticationService {
     }
 
 }
+
