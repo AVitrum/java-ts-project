@@ -4,9 +4,9 @@ import AnimeList from "./pages/anime/AnimeList.tsx";
 import AddAnime from "./pages/anime/AddAnime.tsx";
 import {UserContextProvider} from "./components/UserContext.tsx";
 import Dashboard from "./components/DashBoard.tsx";
-import RegisterPage from "./pages/RegisterPage.tsx";
-import Login from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
+import SignIn from "./pages/authentication/SignIn.tsx";
+import SignUp from "./pages/authentication/SignUp.tsx";
 
 export default function AppRoutes() {
     return(
@@ -16,8 +16,8 @@ export default function AppRoutes() {
                 <Route index element={<HomePage/>}/>
                 <Route path="/animeList" element={<AnimeList/>}/>
                 <Route path="/addAnime" element={<AddAnime/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/login" element={<SignIn/>}/>
+                <Route path="/register" element={<SignUp/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
             </Route>
         </Routes>

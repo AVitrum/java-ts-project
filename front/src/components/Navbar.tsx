@@ -59,7 +59,7 @@ export default function Navbar() {
                         )}
                         <DropdownButton
                             id="dropdown-basic-button"
-                            title={<img src="public/abstract-user-flat-1.svg" alt="" style={{ width: '25px', height: '25px', marginRight: '10px' }} />}
+                            title={<img src="/abstract-user-flat-1.svg" alt="" style={{ width: '25px', height: '25px', marginRight: '10px' }} />}
                             variant="outline-dark"
                         >
                             {token ? (

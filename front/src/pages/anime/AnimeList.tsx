@@ -1,10 +1,12 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AnimePost from "../../components/anime-components/AnimePost.tsx";
-import {UserContext} from "../../components/UserContext.tsx";
+import { UserContext } from "../../components/UserContext.tsx";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 interface Anime {
-    id: number,
+    id: number;
     title: string;
     rating: number;
     recommendation: string;
@@ -18,8 +20,8 @@ const AnimeList: React.FC = () => {
     const { token } = useContext(UserContext);
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
-        }
+            Authorization: `Bearer ${token}`,
+        },
     };
 
     useEffect(() => {
@@ -33,11 +35,16 @@ const AnimeList: React.FC = () => {
     };
 
     return (
-        <div className="anime-posts">
-            {anime.map((animeItem) => (
-                <AnimePost key={animeItem.title} anime={animeItem} />
-            ))}
-        </div>
+        <Container>
+            <br/>
+            <Grid container spacing={5}>
+                {anime.map((animeItem) => (
+                    <Grid item key={animeItem.title} xs={12} sm={5} md={6}>
+                        <AnimePost anime={animeItem} />
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
     );
 };
 
