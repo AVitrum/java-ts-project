@@ -4,7 +4,7 @@ import com.vitrum.api.dto.Request.AnimeRequest;
 import com.vitrum.api.entity.Anime;
 import com.vitrum.api.entity.User;
 import com.vitrum.api.service.AnimeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/anime")
 @CrossOrigin("http://localhost:5173")
+@RequiredArgsConstructor
 public class AnimeController {
 
     private final AnimeService animeService;
-
-    @Autowired
-    public AnimeController(AnimeService animeService) {
-        this.animeService = animeService;
-    }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Anime addAnime(
