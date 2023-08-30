@@ -21,8 +21,11 @@ public class Anime {
 
     @Column(nullable = false)
     private String title;
+
     private String recommendation;
+
     private String genres;
+
     private String link;
 
     @Column(nullable = false, name = "user_id")
