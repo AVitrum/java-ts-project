@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class AnimeService {
 
-    @Value("${upload.dir}")
+    @Value("${upload.imagePath}")
     private String uploadDir;
 
     private final AnimeRepository animeRepository;

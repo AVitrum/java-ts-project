@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5430/my_site
-    username: postgres
-    password: 123456
+    url: jdbc:postgresql://host.docker.internal:5432/my_site
+    username: almashiandrey
+    password: 5a701
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -15,4 +15,4 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 upload:
-  dir: /Users/almashiandrey/Developer/Projects/my-website/front/public/images
+  imagePath: /Users/almashiandrey/Developer/Projects/my-website/front/public/images
